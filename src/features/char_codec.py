@@ -11,6 +11,7 @@ class CharCodec:
     """
 
     max_name_length = 25 + 1 #(+1 to compensate for the NAME_END)
+
     INVALID_CHAR_CLASS = 28
     char_to_class = defaultdict(lambda: CharCodec.INVALID_CHAR_CLASS)
 
@@ -28,6 +29,8 @@ class CharCodec:
     char_to_class[INVALID_CHAR] = INVALID_CHAR_CLASS
 
     class_to_char = {v:k for k, v in char_to_class.items()}
+
+    vocab_size = len(char_to_class.keys())
 
     @staticmethod
     def encode(name):
@@ -71,7 +74,6 @@ class CharCodec:
         For names longer than or equal to the max_name_length, the NAME_END character is added in the last position
         (names[max_name_length - 1], and rest of the name is truncated.)
         """
-        name = str(name)
         name = name + CharCodec.NAME_END #add the end of the name symbol for everyname
         name = CharCodec.encode(name) #encode
         name_len = len(name)

@@ -402,7 +402,7 @@ kamlesh
 rajiv bagoriya
 abhinav chaudhary
 rahul
-"devender singh s/o shrinath r/o kh. no. 72/1
+devender singh s/o shrinath r/o kh. no. 72/1
 azruddin
 sanjay kumar @ pappu
 mushir ahmed
@@ -1169,7 +1169,7 @@ praveen
 amit kumar
 samsuddin
 aayush
-"punit kumar @ ankur m.no.-7404660980
+punit kumar @ ankur m.no.-7404660980
 ajeet kumar
 lok nath
 rattan vail
@@ -2106,7 +2106,7 @@ bhushan kumar
 dinesh kumar
 gulshan kumar
 om prakash
-"suresh 
+suresh 
 shahrukh khan
 amarjeet
 ramesh kumar
@@ -4189,7 +4189,7 @@ dinesh
 aditi
 mohd yunus
 sheikh matin @ munna
-"rohit s/o shiv kumar r/o c-78
+rohit s/o shiv kumar r/o c-78
 vicky
 gorv sharma
 yashpal
@@ -5108,7 +5108,7 @@ sandeep
 gaurav
 ramesh chand tirvedi
 akash lal
-"tek chand s/o nanu ram r/o h.no.105
+tek chand s/o nanu ram r/o h.no.105
 sh. bharu singh
 sehnawaj
 mandu ram
@@ -6381,7 +6381,7 @@ bhulaee
 mihir
 mayank
 santosh uppadhya
-"soban singh rawat
+soban singh rawat
 sudhansu
 lllllllllllllllllll
 smt. jyoti
@@ -6618,8 +6618,8 @@ aakash
 suresh kumar
 gaurav aggarwal
 amit kumar
-"monu 
-"nand kishor
+monu 
+nand kishor
 rohit
 devpal
 vishnu bahadur thapa
@@ -6753,7 +6753,7 @@ ashu @ chavikant
 madhusudan prasad
 mohd parveen
 shiv kumar
-"pramod mishra s/o devi prasad mishra r/o 330
+pramod mishra s/o devi prasad mishra r/o 330
 pramod mishra
 amit kumar
 sehin
@@ -7382,7 +7382,7 @@ karan pandey @ kumar pandey
 anil kumar
 lalu
 raj  kohli
-"jasvinder singh
+jasvinder singh
 anli kumar
 shami walia
 sonu
@@ -9429,7 +9429,7 @@ sunil kumar
 uday
 deepak
 jaiveer s/o mansa ram
-"amjat 
+amjat 
 shelendra
 puspender
 gaurav kumar
@@ -9667,7 +9667,7 @@ mookan
 pradeep saini
 amit
 parmod kumar
-"roshan kumar s/o rajkumar
+roshan kumar s/o rajkumar
 nitesh kumar
 rakesh chander sharma
 narsa ram mghwal
@@ -9954,7 +9954,7 @@ mh sahil
 birajbhushan
 sh jainarayan
 govind singh
-"amit
+amit
 himanshu
 rakesh kumar
 ashif ali
@@ -10906,7 +10906,7 @@ rahimuddin
 bhupender s/o
 raman kumar
 raju
-"mahender s/o dhanna ram r/o b-341
+mahender s/o dhanna ram r/o b-341
 v.r.thomas
 sanjay kewat
 rahim
@@ -11236,7 +11236,7 @@ jantarpal
 gajendra mehta
 vijender
 ahsan khan
-"ajay negi
+ajay negi
 aman kumar
 satish sindhi
 arvind kumar
@@ -14461,7 +14461,7 @@ dinesh  sen
 bapu lal dangi
 rahul
 arif
-"karandeep singh 
+karandeep singh 
 bittoo sahani
 rakesh
 munshi prasad yadav
@@ -14770,7 +14770,7 @@ vijay kumar
 tek chand
 mohd. ladla @ mohd. kaif
 samir raj pal
-"manoj kumar
+manoj kumar
 puran
 chand kumar
 sonu
@@ -14944,7 +14944,7 @@ vidhi
 pooja kashyap
 jyoti
 meena kumari
-"savita
+savita
 reena devi
 neha
 payal goyala
@@ -15784,7 +15784,7 @@ smt. lalita devi
 sangeeta mahali
 pooja
 reena
-"ranjita devi and his son priyanshu age 2
+ranjita devi and his son priyanshu age 2
 sareen bano
 sonali
 soni
@@ -16142,7 +16142,7 @@ jyoti
 kumari kanta @ kajal
 usha sen
 gauri
-"preeti d/o daulat ram r/o a-629
+preeti d/o daulat ram r/o a-629
 preeti singh
 gajala parveen
 ruksana
@@ -17752,7 +17752,7 @@ kavita
 ruby panwar
 sanju
 rekha bai
-"smt. bhanwari 
+smt. bhanwari 
 smt. bholi devi
 hansa
 palvi sharma
@@ -18032,9 +18032,9 @@ phul kumari
 manisha kumari
 anju devi
 sapna
-"pooja with three child (vikash
+pooja with three child (vikash
 khushi
-"rakhi with two child (devraj age-3 yrs
+rakhi with two child (devraj age-3 yrs
 nitu
 rakhi
 beena
@@ -18106,7 +18106,7 @@ rajani
 sonam
 nisha
 krishma tomar
-"sangita devi with daughter sonia 3yrs 6month
+sangita devi with daughter sonia 3yrs 6month
 shobha
 fozia
 moti devi
@@ -19091,7 +19091,7 @@ sahanaj khatun
 neha
 zarina
 archana singh
-"muskan d/o shiv kumar r/o c-78
+muskan d/o shiv kumar r/o c-78
 mamta
 shital
 poonam
@@ -19123,8 +19123,8 @@ punit
 khusbu
 jeba
 rukshan
-"meenu s/o shiv kumar r/o c-78
-"meenu s/o shiv kumar r/o c-78
+meenu s/o shiv kumar r/o c-78
+meenu s/o shiv kumar r/o c-78
 sufiya
 pooja
 shalu
@@ -19254,7 +19254,7 @@ manpreet kaur @ simran
 manbhar bai
 afsana
 palvinder kaur
-"jamna d/o jaipal r/o d-773
+jamna d/o jaipal r/o d-773
 shivani
 gulnaz
 sahin
@@ -20218,7 +20218,7 @@ kimmi@neelam
 suman
 sapna
 saroj
-"rekha with two doughters pooja
+rekha with two doughters pooja
 jaimata
 smt. rajkanwar
 rambha
@@ -20484,7 +20484,7 @@ babli
 kajal
 ritu
 sonika
-"nisha 
+nisha 
 gulab bano
 gulab bano
 kumari soniya
@@ -21883,7 +21883,7 @@ pabu devi
 karuna
 laxmi devi
 felicia sequeira
-"soniya
+soniya
 kamta
 neetu @ kajal
 seema
@@ -22997,7 +22997,7 @@ seeba
 rukhsar
 roshan bai
 seema
-"kanya bai with her 1
+kanya bai with her 1
 munni
 sushree veena
 pooja kanwar
@@ -23359,7 +23359,7 @@ mamta
 pooja
 chandni
 kusum
-"jhingi d/o hago barjo r/o vill. murchi
+jhingi d/o hago barjo r/o vill. murchi
 kavita
 kavita
 anita
@@ -23667,7 +23667,7 @@ lali urf kismat
 sangita & vinita
 dimpal
 priya
-"budhwanti with his son sanju age 2-1/2
+budhwanti with his son sanju age 2-1/2
 anju
 anjali
 rinki
@@ -24769,7 +24769,7 @@ komal
 rachna @ aarti
 rizwana
 jaanki
-"sushma with khushi 
+sushma with khushi 
 meenu
 soni kumari
 aardhna
@@ -24970,7 +24970,7 @@ kamla devi
 tinki
 smt. urmila
 mehnaz
-"pooja d/o ramrati r/o govt school
+pooja d/o ramrati r/o govt school
 nikita
 smt vandana
 janki
@@ -25747,7 +25747,7 @@ ruby kumari
 rinki
 seeta @asha
 pinky
-"smt
+smt
 meena jat
 varsha
 neela kumari
@@ -26142,7 +26142,7 @@ beby
 rakhi
 rekha
 pooja
-"rama dua w/o surender dua r/o 16/28
+rama dua w/o surender dua r/o 16/28
 deepa
 priyanka
 kanchan
@@ -27210,7 +27210,7 @@ swati
 rinku devi
 teena
 babita
-"shakuntala@pooja
+shakuntala@pooja
 babita
 smt bhupendri
 kumari anjeta
@@ -27252,7 +27252,7 @@ rangeeta
 kanki
 sunita dass
 rinki
-"puja with son-ishant
+puja with son-ishant
 rachna
 vinita
 seema kumari
@@ -28351,7 +28351,7 @@ megha
 kumari heena bharati
 krishma
 neha
-"savita
+savita
 priti
 smt. usha
 smt. usha
@@ -28491,7 +28491,7 @@ kumari puja
 amrooti
 sobha
 najira
-"tanisha d/o govin ram r/o 24/86
+tanisha d/o govin ram r/o 24/86
 babita
 monika
 purnima @ priya
@@ -28577,7 +28577,7 @@ rekha
 rinki
 ममता
 bagga kunwar
-"smt. simran or seema
+smt. simran or seema
 rekha @ bhuri
 rekha
 babli
@@ -29704,7 +29704,7 @@ nandini @ meenu
 smt suman
 smt. hemlata
 smt mamta devi
-"raju
+raju
 sandhya
 km. shama
 chanchal saini
@@ -30212,7 +30212,7 @@ neetu
 priyanka
 priti
 kavita
-"km. bhavna
+km. bhavna
 कु0 भावना
 anjum
 miss reena

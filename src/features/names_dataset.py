@@ -54,6 +54,12 @@ class NameGenerationCharLevelDataset:
                    names_shifted_left[i * batch_size:(i + 1) * batch_size, :].reshape(-1))
 
 
+if __name__ == "__main__":
+
+    ds = NameGenerationCharLevelDataset(["../../data/names.txt"]).iterator(num_batches=20)
+    for (X, y) in ds:
+        print(X.shape, y.shape)
+
 """
 
 filenames = ["../../data/names.txt"]
