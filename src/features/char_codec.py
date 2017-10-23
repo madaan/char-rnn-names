@@ -3,16 +3,16 @@ import numpy as np
 from string import ascii_lowercase
 
 
-class CharEncoding:
+class CharCodec:
     """
-    - Wraps all the information required to encode characters in the names to integers and vice versa.
+    Wraps all the information required to encode characters in the names to integers and vice versa.
     The encoder understands the small case english alphabet (mapped 0-25), space (mapped to 26) and the end of the name
     character # (mapped to 27). Everything else is mapped to 28.
     """
 
     max_name_length = 25 + 1 #(+1 to compensate for the NAME_END)
     INVALID_CHAR_CLASS = 28
-    char_to_class = defaultdict(lambda: CharEncoding.INVALID_CHAR_CLASS)
+    char_to_class = defaultdict(lambda: CharCodec.INVALID_CHAR_CLASS)
 
     for c in ascii_lowercase:
         char_to_class[c] = ord(c) - ord("a")
@@ -37,7 +37,7 @@ class CharEncoding:
         For example, "abcd" -> [0, 1, 2, 3]
 
         """
-        return [CharEncoding.char_to_class[c] for c in name.lower()]
+        return [CharCodec.char_to_class[c] for c in name.lower()]
 
     @staticmethod
     def decode(classes):
@@ -46,7 +46,7 @@ class CharEncoding:
         :param classes: a list of integers such that each "c" in classes is between [0, 28]
         :return: The decoded characters, one per class.
         """
-        return [CharEncoding.class_to_char[c] for c in classes]
+        return [CharCodec.class_to_char[c] for c in classes]
 
 
     @staticmethod
@@ -71,23 +71,23 @@ class CharEncoding:
         For names longer than or equal to the max_name_length, the NAME_END character is added in the last position
         (names[max_name_length - 1], and rest of the name is truncated.)
         """
-        name = name + CharEncoding.NAME_END #add the end of the name symbol for everyname
-        name = CharEncoding.encode(name) #encode
+        name = str(name)
+        name = name + CharCodec.NAME_END #add the end of the name symbol for everyname
+        name = CharCodec.encode(name) #encode
         name_len = len(name)
 
-        if name_len >= CharEncoding.max_name_length:
-            truncated_name = name[:(CharEncoding.max_name_length - 1)]
-            truncated_name.append(CharEncoding.char_to_class[CharEncoding.NAME_END]) #must attach the name end
-            return np.array(truncated_name)
+        if name_len >= CharCodec.max_name_length:
+            truncated_name = name[:(CharCodec.max_name_length - 1)]
+            truncated_name.append(CharCodec.char_to_class[CharCodec.NAME_END]) #must attach the name end
+            return np.array(truncated_name, dtype=np.int32)
         else:
-            padded_name = np.empty(CharEncoding.max_name_length, dtype=np.int32)
-            padded_name.fill(CharEncoding.INVALID_CHAR_CLASS)
+            padded_name = np.empty(CharCodec.max_name_length, dtype=np.int32)
+            padded_name.fill(CharCodec.INVALID_CHAR_CLASS)
             padded_name[:name_len] = name
             return padded_name
 
-
 if __name__ == "__main__":
-    print(CharEncoding.encode_and_standardize("ankur dewan"))
-    print(CharEncoding.encode_and_standardize("really really really really really really long random name"))
-    print(CharEncoding.encode_and_standardize(""))
-    print(CharEncoding.encode_and_standardize("p"))
+    print(CharCodec.encode_and_standardize("ankur dewan"))
+    print(CharCodec.encode_and_standardize("really really really really really really long random name"))
+    print(CharCodec.encode_and_standardize(""))
+    print(CharCodec.encode_and_standardize("p"))
