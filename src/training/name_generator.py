@@ -1,8 +1,8 @@
 import tensorflow as tf
-from datetime import datetime
+
 from src.features.char_codec import CharCodec
-import logging
-import sys
+
+
 class NameGenerator:
 
     """
@@ -49,14 +49,20 @@ class NameGenerator:
         """
         rnn_output_per_step_stacked = tf.reshape(rnn_output_per_step, shape=[-1, self.n_hidden]) #(?, n_hidden)
         dense_layer_out_stacked = tf.layers.dense(rnn_output_per_step_stacked, CharCodec.vocab_size) #(?, vocab_size)
-        predicted_next_char_logits = tf.reshape(dense_layer_out_stacked, shape=[-1, vocab_size]) #(?, vocab_size)
-        
-        self._loss = tf.reduce_mean(tf.losses.sparse_softmax_cross_entropy(labels=y, logits=predicted_next_char_logits))
+        predicted_next_char_logits_stacked = tf.reshape(dense_layer_out_stacked, shape=[-1, CharCodec.vocab_size]) #(?, vocab_size)
+
+
+        self._loss = tf.reduce_mean(tf.losses.sparse_softmax_cross_entropy(labels=next_char_in_name,
+                                                                           logits=predicted_next_char_logits_stacked))
         
         optimizer = tf.train.AdamOptimizer()
-        self._train_op = optimizer.minimize(loss)
-        #prediction
-        
+        self._train_op = optimizer.minimize(self.loss)
+        # prediction
+
+        predicted_next_char_logits = tf.reshape(dense_layer_out_stacked,
+                                                shape=[-1, CharCodec.max_name_length,
+                                                       CharCodec.vocab_size])  # (?, vocab_size)
+
         self._best_chars = tf.argmax(predicted_next_char_logits, axis=2)
 
     @property
