@@ -42,7 +42,6 @@ with tf.Session() as sess:
         desired_length = 20
         initial_seed_offset = len(seed)
         for i in range(desired_length):
-        
             feats = CharCodec.encode_and_standardize(res).reshape(1, CharCodec.max_name_length)
             prediction = sess.run(model.prediction, feed_dict={names: feats})
             res += " ".join(CharCodec.decode(prediction[0])[i + initial_seed_offset - 1])
