@@ -8,7 +8,7 @@ class NameGenerator:
     """
     Setup the architecture
     """
-    n_embeddings = 20
+    n_embeddings = 30
     n_layers = 3
     n_hidden = 150
 
@@ -17,8 +17,12 @@ class NameGenerator:
         """
         Map each sequence of encoded names to a sequence of embeddings.
         """
-        embedding_matrix = tf.Variable(tf.random_uniform([CharCodec.vocab_size, self.n_embeddings], -1.0, 1.0)) #(vocab_size, n_embeddings)
-        embedded_names = tf.nn.embedding_lookup(embedding_matrix, names) #(?, seq_length, n_embeddings)
+        with tf.variable_scope("embeddings") as scope:
+            self._embedding_matrix_name = "matrix"
+            self._embedding_matrix = tf.get_variable(name="matrix",
+                                                     initializer=tf.random_uniform([CharCodec.vocab_size, self.n_embeddings],-1.0, 1.0)) #(vocab_size, n_embeddings)
+            self._embedded_names = tf.nn.embedding_lookup(self._embedding_matrix, names) #(?, seq_length, n_embeddings)
+
 
         """
         Next, we define one recurrent cell. The one that takes a vector of dimension n_embeddings as the input and
@@ -36,7 +40,7 @@ class NameGenerator:
         - states (?, n_hidden)
         There is one output per lstm_cell, and there is final state.
         """
-        rnn_output_per_step, states = tf.nn.dynamic_rnn(lstm_cell, inputs=embedded_names, dtype=tf.float32)
+        rnn_output_per_step, states = tf.nn.dynamic_rnn(lstm_cell, inputs=self._embedded_names, dtype=tf.float32)
 
         """
         We feed the per step output to a simple dense layer that predicts the next character. There is a bit of an optimization
@@ -76,3 +80,8 @@ class NameGenerator:
     @property
     def loss(self):
         return self._loss
+
+    @property
+    def char_embedding_matrix(self):
+        with tf.variable_scope("embeddings", reuse=True) as scope:
+            return tf.get_variable(self._embedding_matrix_name)
