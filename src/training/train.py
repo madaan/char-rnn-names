@@ -1,10 +1,12 @@
-import tensorflow as tf
-from datetime import datetime
-from src.features.char_codec import CharCodec
 import logging
-import sys
-from src.training.name_generator import NameGenerator
+from datetime import datetime
+
+import tensorflow as tf
+
+from src.features.char_codec import CharCodec
 from src.features.names_dataset import NameGenerationCharLevelDataset
+from src.model.name_generator import NameGenerator
+
 """
 
 """
@@ -21,6 +23,7 @@ model = NameGenerator(names=names, next_char_in_name=y)
 dataset = NameGenerationCharLevelDataset(["../../data/names.txt"])
 
 saver = tf.train.Saver()
+
 with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     if is_training:
