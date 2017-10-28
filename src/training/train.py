@@ -7,7 +7,7 @@ from src.model.name_generator import NameGenerator
 from tensorflow.contrib.tensorboard.plugins import projector
 import os
 
-n_epochs = 10
+n_epochs = 50
 
 names = tf.placeholder(tf.int32, shape=(None, CharCodec.max_name_length), name="input")
 y = tf.placeholder(dtype=tf.int32, shape=[None])  # (?)
@@ -15,7 +15,7 @@ y = tf.placeholder(dtype=tf.int32, shape=[None])  # (?)
 model = NameGenerator(names=names, next_char_in_name=y)
 
 
-model_path = "../../models/single_lstm_1000_epochs_5.ckpt"
+model_path = "../../models/single_lstm_1000_epochs_6.ckpt"
 
 model_name = "single_lstm.ckpt"
 
