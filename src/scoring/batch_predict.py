@@ -7,14 +7,13 @@ import tensorflow as tf
 from src.features.char_codec import CharCodec
 from src.model.name_generator import NameGenerator
 import random
-def predict(test_file):
+def predict(test_file, model_path):
     """
     test_file: file with one name per line
     """
     names = tf.placeholder(tf.int32, shape=(None, CharCodec.max_name_length), name="input")
     y = tf.placeholder(dtype=tf.int32, shape=[None])  # (?)
     model = NameGenerator(names=names, next_char_in_name=y)
-    model_path = "../../models/single_lstm_1000_epochs_4.ckpt"
     saver = tf.train.Saver()
     with tf.Session() as sess:
         saver.restore(sess, model_path)
@@ -36,7 +35,7 @@ def predict(test_file):
                 print(line, "|", seed, "|", res)
 
 if __name__ == "__main__":
-    predict("../../data/test.txt")
+    predict("../../data/test.txt", model_path="../../models/caucasian_single_lstm.ckpt")
 
 
 
