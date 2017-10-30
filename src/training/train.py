@@ -15,7 +15,7 @@ def train(names_filepaths, model_name, n_epochs=1000):
 
     names = tf.placeholder(tf.int32, shape=(None, CharCodec.max_name_length), name="input")
     y = tf.placeholder(dtype=tf.int32, shape=[None])  # (?)
-    model = NameGenerator(names=names, next_char_in_name=y)
+    model = NameGenerator(model_name=model_name, names=names, next_char_in_name=y)
 
     ##tensorboard
 
@@ -58,11 +58,25 @@ def train(names_filepaths, model_name, n_epochs=1000):
     file_writer.close()
 
 if __name__ == "__main__":
-    x = {
+    datasets = {
         "datasets" : [{
             "name" : "hispanic",
-            "data" : "../../data/hipanic_names.txt"
+            "data" : "../../data/hispanic_names.txt"
+        },{
+            "name" : "caucasian",
+            "data" : "../../data/caucasian_names.txt"
+        },{
+            "name" : "indian",
+            "data" : "../../data/indian_names.txt"
+        },{
+            "name" : "african_american",
+            "data" : "../../data/african_american_names.txt"
+        }, {
+            "name": "all_races",
+            "data": "../../data/all_races_names.txt"
         }]
     }
 
-    train(names_filepaths=["../../data/hispanic_names.txt"], model_name="hispanic", n_epochs=100)
+    for dataset in datasets["datasets"]:
+        print("Processing {0}".format(dataset["name"]))
+        train(names_filepaths=[dataset["data"]], model_name=dataset["name"], n_epochs=1)

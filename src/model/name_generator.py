@@ -12,7 +12,7 @@ class NameGenerator:
     n_lstm_output_dim: the dimensionality of LSTM's output/hidden state.
     """
 
-    def __init__(self, names, next_char_in_name, n_embeddings=30, n_lstm_stacks=2, n_lstm_output_dim=150):
+    def __init__(self, model_name, names, next_char_in_name, n_embeddings=30, n_lstm_stacks=2, n_lstm_output_dim=150):
 
         self.n_embeddings = n_embeddings
         self.n_lstm_stacks = n_lstm_stacks
@@ -20,16 +20,16 @@ class NameGenerator:
         """
         Map each sequence of encoded names to a sequence of embeddings.
         """
-        with tf.variable_scope("embeddings") as scope:
-            self._embedding_matrix_name = "matrix"
+        with tf.variable_scope("embeddings_{0}".format(model_name)):
+            self._embedding_matrix_name = "{0}_matrix".format(model_name)
             embedding_init = tf.random_uniform([CharCodec.vocab_size, self.n_embeddings],-1.0, 1.0)
-            self._embedding_matrix = tf.get_variable(name="matrix",
+            self._embedding_matrix = tf.get_variable(name=self._embedding_matrix_name,
                                                      initializer=embedding_init) #(vocab_size, n_embeddings)
             self._embedded_names = tf.nn.embedding_lookup(self._embedding_matrix, names,
-                                                          name="embedded_names") #(?, max_name_length, n_embeddings)
+                                                          name="{0}_embedded_names".format(model_name)) #(?, max_name_length, n_embeddings)
 
 
-        with tf.variable_scope("lstm"):
+        with tf.variable_scope("lstm_{0}".format(model_name)):
             """
             Next, we define one recurrent cell. The one that takes a vector of dimension n_embeddings as the input and
             generates a vector of size n_hidden as the output. This is for a single step. 
@@ -53,7 +53,7 @@ class NameGenerator:
                                                             dtype=tf.float32)
 
 
-        with tf.variable_scope("dense_layer"):
+        with tf.variable_scope("dense_layer_{0}".format(model_name)):
             """
             We feed the per step output to a simple dense layer that predicts the next character. There is a bit of an
             optimization at play here. The RNN we have has max_name_length nodes, each of which generates a vector that
@@ -70,14 +70,14 @@ class NameGenerator:
                                                             shape=[-1, CharCodec.vocab_size]) #(?, vocab_size)
 
 
-        with tf.variable_scope("loss"):
+        with tf.variable_scope("loss_{0}".format(model_name)):
             self._loss = tf.reduce_mean(tf.losses.sparse_softmax_cross_entropy(labels=next_char_in_name,
                                                                                logits=predicted_next_char_logits_stacked))
             optimizer = tf.train.AdamOptimizer()
             self._train_op = optimizer.minimize(self.loss)
 
 
-        with tf.variable_scope("inference"):
+        with tf.variable_scope("inference_{0}".format(model_name)):
             predicted_next_char_logits = tf.reshape(dense_layer_out_stacked,
                                                     shape=[-1, CharCodec.max_name_length,
                                                            CharCodec.vocab_size])  # (?, vocab_size)
