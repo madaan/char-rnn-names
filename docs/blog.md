@@ -160,8 +160,11 @@ names = tf.placeholder(tf.int32, shape=(None, max_name_length), name="input")
 embeddings = tf.Variable(tf.random_uniform([vocab_size, n_embeddings], -1.0, 1.0))
 embedded_names = tf.nn.embedding_lookup(embeddings, names) #(?, max_name_length, n_embeddings)
 ``` 
+Tensorboard can help in [visualizing embeddings](https://www.tensorflow.org/versions/r1.1/get_started/embedding_viz) using PCA and t-SNE. The t-SNE visualization of the embedding matrix from the indian name generator are as follows. As you can see, the vowels are all close to each other, which hints at the fact that the learned embeddings wrap some linguistic properties of the language. 
 
-
+|![Embeddings](https://raw.githubusercontent.com/madaan/char-rnn-names/master/docs/embedding.png)|
+|:--:|
+|*Embeddings learned by the Indian Name Generator visualized using Tensorboard*|
 
 # Model
 
@@ -350,5 +353,6 @@ The table contains some other interesting examples. Three prefixes are formed fr
 | charizard          | ch            | charles e hall#            | christopher m brannon#     | christian rivera#          | chander shekhar#           | christopher m mcclendon# |
 | charizard          | char          | charles e hall#            | charles e jr hartsfield#   | charles r murillo#         | charan singh . minchu#     | charles a brown#         |
 | charizard          | chariz        | charizelo m laster#        | charizy a berry#           | chariz l martinez#         | chariz#                    | chariz c hill#           |
+
 
 
