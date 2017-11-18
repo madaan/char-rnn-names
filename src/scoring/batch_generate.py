@@ -55,7 +55,7 @@ if __name__ == "__main__":
         gen_config = json.load(f)
     #races = ["hispanic", "indian", "african_american", "caucasian", "all_races"]
 
-    names, seeds = get_seeds(gen_config["seeds_file"])
+    names, seeds = get_seeds(sys.argv[2])
     res = {}
     res["name"] = names
     res["seed"] = seeds
@@ -70,5 +70,5 @@ if __name__ == "__main__":
     col_names.remove("name")
     col_names.remove("seed")
     res = res[["name", "seed"] + col_names]
-    pd.DataFrame.from_dict(res).to_csv(gen_config["result_file"], index=False)
+    pd.DataFrame.from_dict(res).to_csv(sys.argv[3], index=False)
     #print(res)

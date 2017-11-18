@@ -1,4 +1,4 @@
-#### Training Character Level RNNs on Names
+## Training Character Level RNNs on Names
 
 
 
@@ -12,7 +12,7 @@
  
  
 
-#### Configuration
+### Configuration
 The following configuration file that wraps all the information that's needed for training and generation.
 ```javascript
 {
@@ -23,8 +23,8 @@ The following configuration file that wraps all the information that's needed fo
   "n_epochs": 2,
   "log_dir": "logs",
   "model_dir": "models",
-  "seeds_file": "data/test.txt",
-  "result_file": "data/test_output.txt"
+  "seeds_file": ,
+  "result_file": 
 }
 ```
 
@@ -33,19 +33,21 @@ Before you start:
  $ export PYTHONPATH=$PYTHONPATH:`pwd`
  ```
  
-#### Training
+### Training
 
 ```bash
 $ python src/training/train.py names_rnn_conf.json
 ```
 
-#### Generation
-
+### Generation
 ```bash
-$ python src/scoring/batch_generate.py names_rnn_conf.json
+$ python src/scoring/batch_generate.py names_rnn_conf.json "data/test.txt" "data/test_output.txt"
 ```
 
-#### Starting Tensorboard
+Where data/test.txt is a text file with the input seed names ([example](https://github.com/madaan/char-rnn-names/blob/master/data/test.txt)).
+Each of the models will be fed the prefixes derived from these names, and the output will be stored in "data/test_output.txt".
+
+### Starting Tensorboard
 [train.py](https://github.com/madaan/char-rnn-names/blob/master/src/training/train.py) stores logs that can be used to 
 track the loss per epoch and visualize embeddings. To start Tensorboard:
 
@@ -55,8 +57,9 @@ $ tensorboard --logdir=logs/
 
 and then go to http://localhost:6006.
 
-#### Training Time
+### Training Time
 - Training time depends on the size of the dataset. It takes about an hour to train on a file with 40,000 names using a 
 GTX 1070.
 
-<img src="https://raw.githubusercontent.com/madaan/char-rnn-names/master/docs/loss_vs_time.png" width="1100" height="600" />
+
+![lossvtime](https://docs.google.com/spreadsheets/d/e/2PACX-1vSc-jXFrvvYt0w7lt_vJsMZgI2azvWJH8qcjguekP0_6E40NME0cEjrPnyN-xWDk0iT6qBBfFfyhcNb/pubchart?oid=1011156586&format=image)

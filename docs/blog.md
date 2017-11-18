@@ -1,7 +1,12 @@
-# On Transferring Names
+---
+layout: post
+title: Training Char-RNNs for Styling Names
+---
 
-I found a bunch of names over at https://mbejda.github.io/. Thanks, @mbejda. The dataset consists of Hispanic, Indian,
-Caucasian and African American names. Now perhaps you have read this [fantastic blog](http://karpathy.github.io/2015/05/21/rnn-effectiveness/)
+### Trai
+
+I found a bunch of names over at https://mbejda.github.io/. Thanks, [mbejda](https://github.com/mbejda). The dataset
+consists of Hispanic, Indian, Caucasian and African American names. Now perhaps you have read this [fantastic blog](http://karpathy.github.io/2015/05/21/rnn-effectiveness/)
 on RNNs and what they do.
 
 Here is one of quotes from the blog:
@@ -15,12 +20,12 @@ would seem to be taken from Shakespeare. The blog I've linked to contains this a
 
 We have:
 
-1. A way to generate new examples of a piece of text by learning from the existing examples (RNNs).
+1. A model that can learn to generate new samples from a piece of text.
 2. A corpus of names.
 
-So it would not be very inspiring if I say that we can use RNNs to generate new names. Yes we can, and yes, I did.
-We had an "Indian Name Generator" generating *Deepaks* and *Nehas*, a "Caucasian Name Generator" generating
-*Michaels* and *Jennifers* and so on. It was something, but as I said, nothing very surprising.
+So it would not be very inspiring if I say that we can use RNNs to generate new names. Yes we can, and yes, I did.We had
+an "Indian Name Generator" generating *Deepaks* and *Nehas*, a "Caucasian Name Generator" generating *Michaels* and
+*Jennifers* and so on. It was something, but as I said, nothing very surprising.
 
 
 #### Cross Seeding
@@ -28,16 +33,25 @@ We had an "Indian Name Generator" generating *Deepaks* and *Nehas*, a "Caucasian
 Now, I didn't feel like throwing all these RNNs away, so wondered what would happen if I feed, say, the "Indian Name Generator"
 with a first few characters from a Caucasian name, and let it generate the rest? Will it try to **create** a name that
 sounds Indian? So I ran a bunch of these experiments, and present the somewhat more interesting results in this post.
-I also used seeds from names of Pokemons, wrestlers and such. It was fun to see all these different RNNs take a stab at
-creating a name that sounds to be from their domain. Before we jump on to the results, we'll have a brief look at the 
-dataset. We'll then discuss how the dataset was transformed to be fed to RNN. This will be followed by a discussion of 
-the model and the prediction process and finally, we'll look at the results.
+I also used seeds from unconventional names, like those of Pokémons and wrestlers. It was fun to see all these different
+RNNs take a stab at creating a name that sounds to be from their domain:  
 
+| name              | seed         | african_american           | caucasian                  | hispanic                   | indian                     | all_races                |
+|--------------------|---------------|----------------------------|----------------------------|----------------------------|----------------------------|--------------------------|
+| undertaker         | underta       | undertall nix#             | undertan starlir#          | underta romero#            | undertala#                 | undertayshawn king#  
+| aman madaan        | aman mad      | aman madadenis#            | aman madich#               | aman madro l gonzalez#     | aman madhkaran#            | aman madha#              |
+| jose luis          | jose l        | jose l graham#             | jose l ramirez#            | jose l morales#            | jose lal sharma#           | jose l rodriguez#        |
+| hideyoshi          | hideyo        | hideyon u bennett#         | hideyo g morio#            | hideyordo rodriguez#       | hideyohar sharma#          | hideyon d brown#         |
+| dan fineman        | dan f         | dan f briggs#              | dan f witharr#             | dan flekrez#               | dan farjat saini#          | dan francersiii#         |
+ 
+ 
+This post will 
 
 ## II. Looking at the Data
 Although there is no limit to the number of different analysis we can run, we'll present only two here in the interest of
 space: the most popular names and the name length distributions. Looking at the most popular names will give us a feel for 
-the dataset, and the name length distribution was added to add plots and look fancy (and it's used somewhere down the line, too).
+the dataset, and the name length distribution was added to add more plots and make this post look fancier (and it's used
+somewhere down the line, too).
  
 
 ##### Top 5 Most Popular Names
@@ -263,16 +277,6 @@ The following table contains some cherry-picked examples. Results from [this tes
 are appended at the end.
 
 
-
-| name              | seed         | african_american           | caucasian                  | hispanic                   | indian                     | all_races                |
-|--------------------|---------------|----------------------------|----------------------------|----------------------------|----------------------------|--------------------------|
-| undertaker         | underta       | undertall nix#             | undertan starlir#          | underta romero#            | undertala#                 | undertayshawn king#  
-| aman madaan        | aman mad      | aman madadenis#            | aman madich#               | aman madro l gonzalez#     | aman madhkaran#            | aman madha#              |
-| jose luis          | jose l        | jose l graham#             | jose l ramirez#            | jose l morales#            | jose lal sharma#           | jose l rodriguez#        |
-| hideyoshi          | hideyo        | hideyon u bennett#         | hideyo g morio#            | hideyordo rodriguez#       | hideyohar sharma#          | hideyon d brown#         |
-| dan fineman        | dan f         | dan f briggs#              | dan f witharr#             | dan flekrez#               | dan farjat saini#          | dan francersiii#         |
- 
- 
 
 | name              | seed         | african_american           | caucasian                  | hispanic                   | indian                     | all_races                |
 |--------------------|---------------|----------------------------|----------------------------|----------------------------|----------------------------|--------------------------|
