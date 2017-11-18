@@ -1,31 +1,48 @@
 # On Transferring Names
 
-I found a bunch of names over at https://mbejda.github.io/. Thanks, @mbejda. The dataset consists of Hispanic, Indian, Caucasian and African American names. Now perhaps you have read this [fantastic blog](http://karpathy.github.io/2015/05/21/rnn-effectiveness/) post on RNNs. If you have not, you should. It's fantastic as I said. 
+I found a bunch of names over at https://mbejda.github.io/. Thanks, @mbejda. The dataset consists of Hispanic, Indian,
+Caucasian and African American names. Now perhaps you have read this [fantastic blog](http://karpathy.github.io/2015/05/21/rnn-effectiveness/)
+on RNNs and what they do.
 
 Here is one of quotes from the blog:
 
 > We’ll train RNNs to generate text character by character and ponder the question “how is that even possible?”
 
-Yes, it's pretty mind blowing. Now if you don't know how, you can go to the blog and figure out. You can also stay to see what I am talking about here before you take the digression. Either way is fine. Here is a short summary for the lazy ones like me: RNNs can take a bunch of text, say T, and learn to generate new text that would *seem* to be taken from T. For example, we can train an RNN on all the works of William Shakespeare, and the RNN can in turn generate new text that would seem to be taken from Shakespeare. The blog I've linked to contains this and many other interesting examples.
+Yes, it's pretty mind blowing. The blog goes into the details on *how* it's done. Here's a short summary of *what* RNNs
+do: RNNs can take a bunch of text, say T, and learn to generate new text that would *seem* to be taken from T.
+For example, we can train an RNN on all the works of William Shakespeare, and the RNN can in turn generate new text that
+would seem to be taken from Shakespeare. The blog I've linked to contains this and many other interesting examples.
 
-So we have:
+We have:
+
 1. A way to generate new examples of a piece of text by learning from the existing examples (RNNs).
 2. A corpus of names.
 
-So it would not be very inspiring if I say that we can use RNNs to generate new names. Yes we can, and yes, I did. So we had an "Indian Name Generator" generating your *Deepaks* and *Nehas*, a "Caucasian Name Generator" generating *Michaels* and *Jennifers* and so on. It was something, but as I said, nothing very surprising.
+So it would not be very inspiring if I say that we can use RNNs to generate new names. Yes we can, and yes, I did.
+We had an "Indian Name Generator" generating *Deepaks* and *Nehas*, a "Caucasian Name Generator" generating
+*Michaels* and *Jennifers* and so on. It was something, but as I said, nothing very surprising.
+
 
 #### Cross Seeding
-Now, I didn't feel like throwing all these RNNs away, so wondered what would happen if I feed, say, the "Indian Name Generator" with a first few characters from a caucasian name, and let it generate the rest? Will it try to **create** a name that sounds Indian? So I ran a bunch of these experiments, and present the somewhat more interesting results in this post. I also used seeds from names of Pokemons, wrestlers and such. 
 
-We'll take a glimpse over the dataset, discuss how the dataset was prepared for feeding the model, discuss the model and finally present the results.
+Now, I didn't feel like throwing all these RNNs away, so wondered what would happen if I feed, say, the "Indian Name Generator"
+with a first few characters from a Caucasian name, and let it generate the rest? Will it try to **create** a name that
+sounds Indian? So I ran a bunch of these experiments, and present the somewhat more interesting results in this post.
+I also used seeds from names of Pokemons, wrestlers and such. It was fun to see all these different RNNs take a stab at
+creating a name that sounds to be from their domain. Before we jump on to the results, we'll have a brief look at the 
+dataset. We'll then discuss how the dataset was transformed to be fed to RNN. This will be followed by a discussion of 
+the model and the prediction process and finally, we'll look at the results.
 
 
 ## II. Looking at the Data
-Before we get down to the business, let’s look at the distribution of length and the 10 most popular names in each of the datasets.
+Although there is no limit to the number of different analysis we can run, we'll present only two here in the interest of
+space: the most popular names and the name length distributions. Looking at the most popular names will give us a feel for 
+the dataset, and the name length distribution was added to add plots and look fancy (and it's used somewhere down the line, too).
+ 
 
-##### Top 10 Most Popular Names
+##### Top 5 Most Popular Names
 
-The following tables list the top 10 most popular names for each of the corpus. 
+The following tables list the top 5 most popular names for each of the corpus. 
 
 | African American    |                   |                  |                 |
 |---------------------|-------------------|------------------|-----------------|
@@ -35,11 +52,7 @@ The following tables list the top 10 most popular names for each of the corpus.
 | patricia            | brown             | anthony          | jones           |
 | angela              | smith             | willie           | jackson         |
 | mary                | jackson           | robert           | davis           |
-| jessica             | jones             | charles          | robinson        |
-| cynthia             | thomas            | christopher      | harris          |
-| jennifer            | robinson          | john             | green           |
-| yolanda             | davis             | david            | miller          |
-| tiffany             | wilson            | antonio          | lewis           |
+
 
 
 | Caucasian          |                   |                   |                 |
@@ -50,11 +63,7 @@ The following tables list the top 10 most popular names for each of the corpus.
 | kimberly           | williams          | robert            | davis           |
 | jessica            | miller            | david             | jones           |
 | ashley             | johnson           | john              | brown           |
-| melissa            | jones             | christopher       | miller          |
-| michelle           | davis             | william           | gonzalez        |
-| lisa               | martin            | joseph            | hernandez       |
-| nicole             | white             | richard           | garcia          |
-| angela             | moore             | jason             | perez           |
+
 
 
 | Hispanic            |                   |                  |                  |
@@ -65,11 +74,7 @@ The following tables list the top 10 most popular names for each of the corpus.
 | jennifer            | rivera            | luis             | martinez         |
 | gloria              | perez             | carlos           | rivera           |
 | elizabeth           | garcia            | jorge            | hernandez        |
-| ana                 | torres            | miguel           | gonzalez         |
-| jessica             | hernandez         | francisco        | perez            |
-| damaris             | vega              | pedro            | torres           |
-| samantha            | martinez          | jesus            | lopez            |
-| rebecca             | lopez             | david            | sanchez          |
+
 
 | Indian             |                   |                  |                 |
 |--------------------|-------------------|------------------|-----------------|
@@ -79,36 +84,38 @@ The following tables list the top 10 most popular names for each of the corpus.
 | smt.               | kumari            | amit             | sharma          |
 | jyoti              | jyoti             | ram              | lal             |
 | kumari             | bai               | sanjay           | ram             |
-| sunita             | poonam            | mohd             | deepak          |
-| poonam             | sunita            | ravi             | yadav           |
-| neha               | sharma            | sunil            | gupta           |
-| seema              | neha              | ajay             | rahul           |
-| priyanka           | kaur              | vijay            | chand           |
+
 
 
 ##### Name Length Distributions
 
-The name length distributions are next plotted for each of the races. Indian names seem to be the only outlier, with short names giving rise to the minor mode. All the other races seem to be evenly distributed with majority of names being 15 characters long and thereabouts.
+The name length distributions are next plotted for each of the races. Indian names seem to be the only outlier, with short
+names giving rise to the minor mode. All the other races seem to be evenly distributed with majority of names being 15
+characters long and thereabouts.
 
 ![African American Names](https://raw.githubusercontent.com/madaan/char-rnn-names/master/docs/african_american_name_len_dist.png) ![Caucasian](https://raw.githubusercontent.com/madaan/char-rnn-names/master/docs/caucasian_name_len_dist.png)
 
 
 ![Hispanic](https://raw.githubusercontent.com/madaan/char-rnn-names/master/docs/hispanic_name_len_dist.png) ![Indian](https://raw.githubusercontent.com/madaan/char-rnn-names/master/docs/indian_name_len_dist.png)
 
----
-## Input Representation
 
-In this section, we will spend some time looking at how do we take these bunch of names and convert them into something that can be fed to something like an RNN. We will get to that representation in two steps: encoding, standardization and embeddings. 
+## III. Input Representation
 
-Let's quickly recap what we are set to do. The algorithm we are trying to train must learn to predict the next character of a sequence given the previous characters. Consider a sample name, “han[]yao#”. Note that the name is in small case, [] is a space, and “#” is a special character that denotes end of the name. So we have (prev character →  next character):
-h → a
-ha → n 
-han → []
-han[] → han[]y
-han[]y → han[]ya
-han[]ya → han[]yao
+In this section, we will spend some time looking at how do we take these bunch of names and convert them into something
+that can be fed to something like an RNN. We will get to that representation in two steps: encoding, standardization and
+embeddings. 
+
+Let's quickly recap what we are set to do. The algorithm we are trying to train must learn to predict the next character
+of a sequence given the previous characters. Consider a sample name, “han[]yao#”. Note that the name is in small case, []
+is a space, and “#” is a special character that denotes end of the name. So we have (prev character →  next character):    
+h → a    
+ha → n    
+han → []    
+han[] → han[]y    
+han[]y → han[]ya    
+han[]ya → han[]yao    
 han[]yao → han[]yao#
- 
+
 #### a) Encoding
 
 We convert each character in our name to a number. This is achieved by defining a simple mapping as follows:
@@ -120,13 +127,19 @@ We convert each character in our name to a number. This is achieved by defining 
 | "#" (End of Name)     | 27       |
 | . (Invalid Character) | 28       |
 
-- We assume that all the names are made up of lowercase english alphabets, with a space separating different components of a name. Every name ends with a special name end character (“#”). Every other character is mapped to an invalid character, mapped to a “.”. 
+- We assume that all the names are made up of lowercase english alphabets, with a space separating different components
+of a name. Every name ends with a special name end character (“#”). Every other character is mapped to an invalid
+character, mapped to a “.”. 
 
-- Given the above table, it just becomes a dictionary lookup. Nothing special. The map is defined in char-rnn-names/src/features/char_codec.py. 
+- Given the above table, it just becomes a dictionary lookup. Nothing special. The map is defined in ```char-rnn-names/src/features/char_codec.py```. 
 
 #### b) Standardization 
 
-Length of the names varies a lot. However, for training purposes, the RNNs are usually approximated by an “unrolled” version. This is basically the RNN but unrolled over some n timesteps, where each timestep is an element in the input sequence. In short, we will need to fix on a good “maximum name length”. Names longer than the maximum name length will be truncated, and names smaller than the maximum name length will be padded with Invalid characters. As discussed, we assume that every name ends with a “Name End” character(#).  All of this happens in the following piece of code:
+Length of the names varies a lot. However, for training purposes, the RNNs are usually approximated by an “unrolled”
+version. This is basically the RNN but unrolled over some n timesteps, where each timestep is an element in the input
+sequence. In short, we will need to fix on a good “maximum name length”. Names longer than the maximum name length will
+be truncated, and names smaller than the maximum name length will be padded with Invalid characters. As discussed, we
+assume that every name ends with a “Name End” character(#).  All of this happens in the following piece of code:
 ```python
 @staticmethod
 def encode_and_standardize(name):
@@ -144,23 +157,37 @@ def encode_and_standardize(name):
 ```
 Note that we retain the name end character (#) even after the truncation.
 
-So how do we arrive at the max_name_lenght? A Simple way to do that is fix something safe like 100. However, that would mean that our network will be wider than we perhaps want (most of the names will be smaller than 100 characters). This will lead to lots of wasted computation and slower training times (give it a try!). Or, we could just plot a distribution of the name lengths and pick something simple. We've already done that, and as you can see, it seems like 25 will cover most of the cases. That’s what I use in the experiments.
+So how do we arrive at the ```max_name_length```? A simple way to do that is fix something safe like 100. However, that
+would mean that our network will be wider than we perhaps want (most of the names will be smaller than 100 characters). This
+will lead to lots of wasted computation and slower training times (give it a try!). Or, we could just plot a distribution
+of the name lengths and pick something simple. We've already done that, and as you can see, it seems like 25 will cover 
+most of the cases. That’s what I use in the experiments.
 
 #### c) Embeddings
 
-So far, we have standardized each name to a fixed length, added a character to mark the end of the name, and encoded the name from an array of chars to an array of integers. 
+So far, we have standardized each name to a fixed length, added a character to mark the end of the name, and encoded the
+name from an array of chars to an array of integers. 
 
 If you don’t know what embeddings are at all, I recommend checking out [this](https://www.tensorflow.org/programmers_guide/embedding) or [this](https://deeplearning4j.org/word2vec.html) link. 
 
 
-The tl;dr of the technique is that each of the characters is mapped to an array of numbers. The array is called an embedding, and the length of the array is the dimensionality of the embedding. For example, if we choose to use 5 dimensional embeddings, it just means that every character is mapped to a 5 dimensional real vector. We can start with pre-trained embeddings, or learn them as part of the training process. In our setting, that means that we will hopefully learn embeddings that makes it easier for us to predict the next character in the name. 
-The following 3 lines of code is all we need to add embeddings to your codebase. ```embeddings``` is a matrix, which has one row per element in our vocabulary. ``embedded_names`` takes in the input, which is ```batch_size x max_name_length```, and maps each character in the name to an embedding, to yield an input with dimensions ```batch_size x max_name_length x n_embeddings```.
+The tl;dr of the technique is that each of the characters is mapped to an array of numbers. The array is called an
+embedding, and the length of the array is the dimensionality of the embedding. For example, if we choose to use 5 
+dimensional embeddings, it just means that every character is mapped to a 5 dimensional real vector. We can start with
+pre-trained embeddings, or learn them as part of the training process (which is what our model does). In our setting,
+that means that we will hopefully learn embeddings that makes it easier for us to predict the next character in the name.
+The following 3 lines of code is all we need to add embeddings to your codebase. ```embeddings``` is a matrix, which has
+one row per element in our vocabulary. ``tf.nn.embedding_lookup`` takes in the input, which is ```batch_size x max_name_length```,
+and maps (*looks up*) each character in the name to an embedding, to yield an input with dimensions ```batch_size x max_name_length x n_embeddings```.
 ```py 
 names = tf.placeholder(tf.int32, shape=(None, max_name_length), name="input")
 embeddings = tf.Variable(tf.random_uniform([vocab_size, n_embeddings], -1.0, 1.0))
 embedded_names = tf.nn.embedding_lookup(embeddings, names) #(?, max_name_length, n_embeddings)
 ``` 
-Tensorboard can help in [visualizing embeddings](https://www.tensorflow.org/versions/r1.1/get_started/embedding_viz) using PCA and t-SNE. The t-SNE visualization of the embedding matrix from the indian name generator are as follows. As you can see, the vowels are all close to each other, which hints at the fact that the learned embeddings wrap some linguistic properties of the language. 
+Tensorboard can help in [visualizing embeddings](https://www.tensorflow.org/versions/r1.1/get_started/embedding_viz) using
+PCA and t-SNE. The t-SNE visualization of the embedding matrix from the indian name generator are as follows. As you can
+see, the vowels are all close to each other, which hints at the fact that the learned embeddings wrap some linguistic 
+properties of the names pertaining to the race, and are perhaps useful in generating new ones. 
 
 |![Embeddings](https://raw.githubusercontent.com/madaan/char-rnn-names/master/docs/embedding.png)|
 |:--:|
@@ -168,9 +195,13 @@ Tensorboard can help in [visualizing embeddings](https://www.tensorflow.org/vers
 
 # Model
 
-The model used is a character level recurrent neural network (LSTM in this particular case). This [excellent blog post](http://colah.github.io/posts/2015-08-Understanding-LSTMs/) discusses the same at length. 
-
-The architecture used in this case is similar, a recursive neural network is trained to predict the next character given the characters already seen. A high level overview is the following: Each character in the normalized name is converted to the corresponding embedding vector, which is fed to an LSTM. The output from this first LSTM is fed to a second LSTM. The second LSTM is then fed to a dense layer, which emits a logits vector of length 29. An argmax over the logits vector is used to calculate the loss and make predictions. 
+The model used is a character level recurrent neural network (LSTM in this particular case). This [neat blog post](http://colah.github.io/posts/2015-08-Understanding-LSTMs/)
+discusses the same at length, though I personally liked the explanation in [this book](http://shop.oreilly.com/product/0636920052289.do) better.
+The architecture used in this case is similar, a recursive neural network is trained to predict the next character given
+the characters already seen. A high level overview is the following: Each character in the normalized name is converted 
+to the corresponding embedding vector, which is fed to an LSTM. The output from this first LSTM is fed to a second LSTM.
+The second LSTM is then fed to a dense layer, which emits a logits vector of length 29. An argmax over the logits vector
+is used to calculate the loss and make predictions. 
 
 
 
