@@ -60,4 +60,4 @@ and then go to http://localhost:6006.
 - Training time depends on the size of the dataset. It takes about an hour to train on a file with 40,000 names using a 
 GTX 1070.
 
-![Loss vs Time](https://raw.githubusercontent.com/madaan/char-rnn-names/master/docs/loss_vs_time.png)
+<img src="https://raw.githubusercontent.com/madaan/char-rnn-names/master/docs/loss_vs_time.png" width="1100" height="600" />
