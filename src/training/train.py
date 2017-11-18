@@ -4,11 +4,13 @@ from src.features.char_codec import CharCodec
 from src.features.names_dataset import NameGenerationCharLevelDataset
 from src.model.name_generator import NameGenerator
 import os
+import sys
+import json
 
 LOG_DIR = "../../logs"
 SESSION_DIR = "../../models"
 
-def train(names_filepaths, model_name, n_epochs=1000):
+def train(names_filepaths, log_base_dir, model_dir, model_name, n_epochs=1000):
 
     names = tf.placeholder(tf.int32, shape=(None, CharCodec.max_name_length), name="input")
     y = tf.placeholder(dtype=tf.int32, shape=[None])  # (?)
@@ -17,7 +19,7 @@ def train(names_filepaths, model_name, n_epochs=1000):
     ##tensorboard
 
     ### log cross entropy
-    logdir = "{0}/run-{1}-{2}".format(LOG_DIR, model_name, datetime.now().strftime("%Y%m%d%H%M%S"))
+    logdir = "{0}/run-{1}-{2}".format(log_base_dir, model_name, datetime.now().strftime("%Y%m%d%H%M%S"))
     xentropy_summary = tf.summary.scalar("Cross_Entropy_Loss", model.loss)
     file_writer = tf.summary.FileWriter(logdir, tf.get_default_graph())
 
@@ -37,11 +39,12 @@ def train(names_filepaths, model_name, n_epochs=1000):
             file_writer.add_summary(summary, i)
             saver.save(sess, os.path.join(logdir, model_name), global_step=i)
 
-        saver.save(sess, "{0}/{1}_{2}_eps".format(SESSION_DIR, model_name, n_epochs))
+        saver.save(sess, "{0}/{1}_{2}_eps".format(model_dir, model_name, n_epochs))
 
     file_writer.close()
 
 if __name__ == "__main__":
+    """
     datasets = {
         "datasets" : [{
             "name" : "hispanic",
@@ -60,7 +63,12 @@ if __name__ == "__main__":
             "data": "../../data/all_races_names.txt"
         }]
     }
-
-    for dataset in datasets["datasets"]:
+"""
+    with open(sys.argv[1], "r") as f:
+        train_conf = json.load(f)
+    for dataset in train_conf["datasets"]:
         print("Processing {0}".format(dataset["name"]))
-        train(names_filepaths=[dataset["data"]], model_name=dataset["name"], n_epochs=2000)
+        train(names_filepaths=[dataset["data"]],
+              log_base_dir=train_conf["log_dir"],
+              model_dir=train_conf["model_dir"],
+              model_name=dataset["name"], n_epochs=train_conf["n_epochs"])

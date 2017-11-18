@@ -1,0 +1,25 @@
+{
+  "datasets": [
+    {
+      "name": "hispanic",
+      "data": "data/hispanic_names.txt"
+    },
+    {
+      "name": "caucasian",
+      "data": "data/caucasian_names.txt"
+    },
+    {
+      "name": "indian",
+      "data": "data/indian_names.txt"
+    },
+    {
+      "name": "african_american",
+      "data": "data/african_american_names.txt"
+    }
+  ],
+  "n_epochs": 2,
+  "log_dir": "logs/",
+  "model_dir": "models",
+  "seeds_file": "data/test.txt",
+  "output_file": "data/test_output.txt"
+}

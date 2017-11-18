@@ -23,11 +23,11 @@ def predict(test_seeds, model_name, model_path):
         saver.restore(sess, model_path)
         for seed in test_seeds:
             res = seed
-            initial_seed_offset = len(seed)
+            seed_length = len(seed)
             for i in range(CharCodec.max_name_length - len(seed)):
                 feats = CharCodec.encode_and_standardize(res).reshape(1, CharCodec.max_name_length)
                 prediction = sess.run(model.prediction, feed_dict={names: feats})
-                res += " ".join(CharCodec.decode(prediction[0])[i + initial_seed_offset - 1])
+                res += " ".join(CharCodec.decode(prediction[0])[i + seed_length - 1])
                 if res[-1] == CharCodec.NAME_END:
                     break
                 #seed = CharCodec.decode(prediction[0])[0]
@@ -49,17 +49,26 @@ def get_seeds(names_file):
     return names, seeds
 
 if __name__ == "__main__":
-    races = ["hispanic", "indian", "african_american", "caucasian", "all_races"]
-    #races = ["caucasian"]
-    names, seeds = get_seeds("../../data/test.txt")
-    print(names)
-    print(seeds)
+    import sys
+    import json
+    with open(sys.argv[1], "r") as f:
+        gen_config = json.load(f)
+    #races = ["hispanic", "indian", "african_american", "caucasian", "all_races"]
+
+    names, seeds = get_seeds(gen_config["seeds_file"])
     res = {}
-    res["names"] = names
-    res["seeds"] = seeds
+    res["name"] = names
+    res["seed"] = seeds
     #seeds = ["undertaker"[:i] for i in range(1, 5)]
     #seeds = ["hash"]
+    races = [d["name"] for d in gen_config["datasets"]]
     for race in races:
-        res[race] = predict(test_seeds=seeds, model_name=race, model_path="../../models/{0}_2000_eps".format(race))
-    pd.DataFrame.from_dict(res).to_csv("../../data/predictions.csv", index=False)
-    print(res)
+        res[race] = predict(test_seeds=seeds, model_name=race, model_path="{0}/{2}_{1}_eps".format(gen_config["model_dir"], gen_config["n_epochs"], race))
+        #print(predict(test_seeds=seeds, model_name=race, model_path="{0}/{1}_2000_eps".format(gen_config["model_path"], race)))
+    res = pd.DataFrame.from_dict(res)
+    col_names = list(res.columns.values)
+    col_names.remove("name")
+    col_names.remove("seed")
+    res = res[["name", "seed"] + col_names]
+    pd.DataFrame.from_dict(res).to_csv(gen_config["result_file"], index=False)
+    #print(res)
