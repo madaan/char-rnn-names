@@ -13,8 +13,7 @@
  
 
 #### Configuration
-Where names_rnn_conf.json is a configuration file that wraps all the information that's needed to run training and
-scoring.
+The following configuration file that wraps all the information that's needed for training and generation.
 ```javascript
 {
   "datasets": [{
