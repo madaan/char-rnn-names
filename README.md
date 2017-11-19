@@ -1,6 +1,6 @@
 ## Training Character Level RNNs on Names
 
-
+[Blog](http://madaan.github.io/names/)
 
 | name              | seed         | african_american           | caucasian                  | hispanic                   | indian                     | all_races                |
 |--------------------|---------------|----------------------------|----------------------------|----------------------------|----------------------------|--------------------------|
